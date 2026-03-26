@@ -1,0 +1,40 @@
+{
+  "entities": {
+    "Session": {
+      "title": "User Session",
+      "description": "Tracks a user's interaction with the prototype.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "startSellingSimulationClicked": { "type": "boolean" },
+        "notifyBuyerClicked": { "type": "boolean" },
+        "acceptSuggestedPriceClicked": { "type": "boolean" },
+        "wouldSellHereClicked": { "type": "boolean" },
+        "sellInterestReasons": { "type": "array", "items": { "type": "string" } },
+        "startBuyerSimulationClicked": { "type": "boolean" },
+        "checkoutItems": { 
+          "type": "array", 
+          "items": { 
+            "type": "object", 
+            "properties": {
+              "name": { "type": "string" },
+              "verified": { "type": "boolean" }
+            }
+          } 
+        },
+        "wouldBuyHereClicked": { "type": "boolean" },
+        "buyerInterestReasons": { "type": "array", "items": { "type": "string" } },
+        "waitlistEmail": { "type": "string" },
+        "result_tag": { "type": "integer", "description": "Number of verified items selected (0, 1, or 2)" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "sessions/{sessionId}": {
+      "schema": "Session",
+      "description": "Collection of user sessions."
+    }
+  }
+}

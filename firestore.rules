@@ -1,0 +1,28 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+         (request.auth.token.email == "davidann303132@gmail.com" && request.auth.token.email_verified == true));
+    }
+
+    match /sessions/{sessionId} {
+      // Allow anyone to read, create and update their own session document
+      // We use a random sessionId generated on the client
+      allow get: if true;
+      allow create, update: if true;
+      // Only admins can list all sessions
+      allow list: if isAdmin();
+    }
+
+    match /users/{userId} {
+      allow read, write: if request.auth.uid == userId || isAdmin();
+    }
+  }
+}
