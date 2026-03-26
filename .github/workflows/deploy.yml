@@ -27,6 +27,8 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_FIREBASE_CONFIG: ${{ secrets.VITE_FIREBASE_CONFIG }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
